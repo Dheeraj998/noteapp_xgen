@@ -1,16 +1,26 @@
 # notes_app_xgen
 
-A new Flutter project.
+A Flutter app for user authentication and notes management using Firebase Authentication & Firestore.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+🚀 Features
+User Authentication: Sign up, log in, and log out (Firebase Email/Password).
+Notes Management: Create, edit, delete, and list personal notes with timestamps.
+User Profile: Display logged-in user’s email.
+State Management: Uses Provider.
+Clean Architecture: MVVM structure for modular and maintainable code.
+🛠️ Setup
+Clone the repo:
+sh
+Copy
+Edit
+git clone https://github.com/yourusername/flutter-notes-app.git  
+cd flutter-notes-app  
+Setup Firebase:
+Enable Authentication (Email/Password) & Firestore.
+Add google-services.json (Android) & GoogleService-Info.plist (iOS).
+Install dependencies & run:
+sh
+Copy
+Edit
+flutter pub get  
+flutter run  
