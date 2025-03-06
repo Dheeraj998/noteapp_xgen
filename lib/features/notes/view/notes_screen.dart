@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app_xgen/core/utils/app_routes.dart';
 import 'package:notes_app_xgen/core/utils/extension.dart';
 import 'package:notes_app_xgen/features/notes/model/notes_model.dart';
-import 'package:notes_app_xgen/features/notes/provider/notes_provirer.dart';
+import 'package:notes_app_xgen/features/notes/provider/notes_provider.dart';
 import 'package:notes_app_xgen/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,9 @@ class NotesScreen extends StatelessWidget {
         );
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {}, // Navigate to add note
+        onPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.addNote);
+        }, // Navigate to add note
         child: const Icon(Icons.add),
       ),
     );

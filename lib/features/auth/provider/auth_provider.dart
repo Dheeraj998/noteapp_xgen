@@ -1,24 +1,42 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../data/auth_repository.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthRepository _authRepository = AuthRepository();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _user;
+  bool _isLoading = true; // Initial loading state
   bool isLoading = false;
+  User? get user => _user;
+
+  AuthProvider() {
+    _checkUserStatus(); // Check user on app start
+  }
+
+  // Check authentication state
+  void _checkUserStatus() {
+    _auth.authStateChanges().listen((User? user) {
+      _user = user;
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
 
   Future<bool> signUp(String email, String password) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
     var user = await _authRepository.signUp(email, password);
-    isLoading = false;
+    _isLoading = false;
     notifyListeners();
     return user != null;
   }
 
   Future<bool> signIn(String email, String password) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
     var user = await _authRepository.signIn(email, password);
-    isLoading = false;
+    _isLoading = false;
     notifyListeners();
     return user != null;
   }
