@@ -42,7 +42,15 @@ class _NotesScreenState extends State<NotesScreen> {
           onPressed: () => themeProvider.toggleTheme(),
         ),
         actions: [
-          
+          IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Loggedout successfully')));
+                context.authProvider.signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.login, (_) => false);
+              }),
         ],
       ),
       body: Consumer<NotesProvider>(
@@ -64,6 +72,8 @@ class _NotesScreenState extends State<NotesScreen> {
                   note: noteModel,
                   onDelete: () {
                     note.deleteNote(noteModel.id ?? "");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Deleted successfully')));
                   },
                   onTap: () {});
             },

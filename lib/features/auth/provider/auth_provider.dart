@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import '../data/auth_repository.dart';
 
 class AuthProviderr with ChangeNotifier {
@@ -40,6 +41,38 @@ class AuthProviderr with ChangeNotifier {
     notifyListeners();
     return user != null;
   }
+
+  // Future<bool> signInWithGoogle() async {
+  //   try {
+  //     _isLoading = true;
+  //     notifyListeners();
+
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //     if (googleUser == null) {
+  //       _isLoading = false;
+  //       notifyListeners();
+  //       return false;
+  //     }
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+  //     final OAuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     await _auth.signInWithCredential(credential);
+
+  //     _isLoading = false;
+  //     notifyListeners();
+  //     return true;
+  //   } catch (error) {
+  //     debugPrint("Google Sign-In error: $error");
+  //     _isLoading = false;
+  //     notifyListeners();
+  //     return false;
+  //   }
+  // }
 
   Future<void> signOut() async {
     await _authRepository.signOut();

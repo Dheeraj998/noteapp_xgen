@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app_xgen/core/utils/app_colors.dart';
 import 'package:notes_app_xgen/core/utils/app_routes.dart';
 import 'package:notes_app_xgen/core/utils/custom_log.dart';
 import 'package:notes_app_xgen/features/auth/provider/auth_provider.dart';
 import 'package:notes_app_xgen/widgets/custom_button.dart';
+import 'package:notes_app_xgen/widgets/custom_text.dart';
 import 'package:notes_app_xgen/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -44,38 +49,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Password',
                 obscureText: true,
                 validator: (value) {
-                  if (value == null || value.length < 6)
+                  if (value == null || value.length < 6) {
                     return 'Password must be at least 6 characters';
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 24),
-              // CustomButton(
-              //         text: 'Login',
-              //         onPressed: () async {
-              //           if (_formKey.currentState!.validate()) {
-              //             bool success = await authProvider.signIn(
-              //                 emailController.text, passwordController.text);
-              //             if (success) {
-              //               Navigator.pushReplacementNamed(
-              //                   context, AppRoutes.notes);
-              //             } else {
-              //               ScaffoldMessenger.of(context).showSnackBar(
-              //                   const SnackBar(content: Text('Login Failed')));
-              //             }
-              //           }
-              //         },
-              //       ),
               Consumer<AuthProviderr>(builder: (context, auth, _) {
                 return CommonButton(
+                    onLoading: auth.isLoading,
+                    buttonHeight: 50,
+                    borderRadius: 5,
+                    buttonWidth: double.maxFinite,
+                    buttonColor: AppColors.secondary,
+                    buttonStyle: const TextStyle(color: AppColors.white),
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
                         bool success = await auth.signIn(
                             emailController.text, passwordController.text);
                         if (success) {
-                          customLog("cllaed");
                           Navigator.pushReplacementNamed(
                               context, AppRoutes.notes);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Welcome back')));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Login Failed')));
@@ -84,10 +82,53 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     buttonText: "Login");
               }),
+              const SizedBox(height: 30),
+
+              // Google Sign-In Button
+              Consumer<AuthProviderr>(builder: (context, auth, _) {
+                return CircleAvatar(
+                  backgroundColor: AppColors.primary.withOpacity(.1),
+                  child: Image.asset(
+                    'assets/images/google.png', // Ensure you have a Google icon in assets
+                    height: 20,
+                  ),
+                );
+                // ElevatedButton.icon(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: AppColors.white,
+                //     // padding:
+                //     //     const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(100),
+                //     ),
+                //     elevation: 2,
+                //   ),
+                //   onPressed: () async {
+                //     // bool success = await auth.signInWithGoogle();
+                //     // if (success) {
+                //     //   Navigator.pushReplacementNamed(context, AppRoutes.notes);
+                //     //   ScaffoldMessenger.of(context).showSnackBar(
+                //     //     const SnackBar(content: Text('Google Sign-In Success')),
+                //     //   );
+                //     // } else {
+                //     //   ScaffoldMessenger.of(context).showSnackBar(
+                //     //     const SnackBar(content: Text('Google Sign-In Failed')),
+                //     //   );
+                //     // }
+                //   },
+                //   icon: ,
+                //   label: const Text(
+                //     "",
+                //     style: TextStyle(color: Colors.black),
+                //   ),
+                // );
+              }),
+              const SizedBox(height: 16),
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, AppRoutes.signup),
-                child: const Text('Don\'t have an account? Sign Up'),
+                child:
+                    const CommonText(text: 'Don\'t have an account? Sign Up'),
               ),
             ],
           ),
