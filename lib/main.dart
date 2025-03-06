@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app_xgen/core/utils/app_routes.dart';
 import 'package:notes_app_xgen/features/auth/provider/auth_provider.dart';
-import 'package:notes_app_xgen/features/auth/view/login_screen.dart';
+import 'package:notes_app_xgen/features/notes/provider/notes_provirer.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -12,6 +12,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ChangeNotifierProvider(create: (_) => NotesProvider()),
     ],
     builder: (context, state) {
       return MyApp();
