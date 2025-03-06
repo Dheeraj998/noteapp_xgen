@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410267789768",
+    "project_id": "xgen-notes-app",
+    "storage_bucket": "xgen-notes-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410267789768:android:27a383ed5a5a5b6525b8fd",
+        "android_client_info": {
+          "package_name": "com.example.notes_app_xgen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWLTtYqW9V6CrXbadeV7zGIwlVPiMY0zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

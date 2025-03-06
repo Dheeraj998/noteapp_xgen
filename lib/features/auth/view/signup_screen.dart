@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app_xgen/core/utils/app_routes.dart';
-import 'package:notes_app_xgen/core/utils/custom_log.dart';
-import 'package:notes_app_xgen/features/auth/provider/auth_provider.dart';
-import 'package:notes_app_xgen/widgets/custom_button.dart';
 import 'package:notes_app_xgen/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
+import '../provider/auth_provider.dart';
+import '../../../core/utils/app_routes.dart';
+import '../../../widgets/custom_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title: const Text('Sign Up')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -49,31 +52,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                controller: confirmPasswordController,
+                labelText: 'Confirm Password',
+                obscureText: true,
+                validator: (value) {
+                  if (value != passwordController.text)
+                    return 'Passwords do not match';
+                  return null;
+                },
+              ),
               const SizedBox(height: 24),
-              // CustomButton(
-              //         text: 'Login',
+              // authProvider.isLoading
+              //     ? const CircularProgressIndicator()
+              //     : CustomButton(
+              //         text: 'Sign Up',
               //         onPressed: () async {
               //           if (_formKey.currentState!.validate()) {
-              //             bool success = await authProvider.signIn(
-              //                 emailController.text, passwordController.text);
+              //             bool success = await authProvider.signUp(emailController.text, passwordController.text);
               //             if (success) {
-              //               Navigator.pushReplacementNamed(
-              //                   context, AppRoutes.notes);
+              //               Navigator.pushReplacementNamed(context, AppRoutes.notes);
               //             } else {
               //               ScaffoldMessenger.of(context).showSnackBar(
-              //                   const SnackBar(content: Text('Login Failed')));
+              //                 const SnackBar(content: Text('Signup Failed')),
+              //               );
               //             }
               //           }
               //         },
               //       ),
+
               Consumer<AuthProvider>(builder: (context, auth, _) {
                 return CommonButton(
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        bool success = await auth.signIn(
+                        bool success = await auth.signUp(
                             emailController.text, passwordController.text);
                         if (success) {
-                          customLog("cllaed");
                           Navigator.pushReplacementNamed(
                               context, AppRoutes.notes);
                         } else {
@@ -86,8 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }),
               const SizedBox(height: 16),
               TextButton(
-                onPressed: () => Navigator.pushNamed(context, AppRoutes.signup),
-                child: const Text('Don\'t have an account? Sign Up'),
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Already have an account? Log In'),
               ),
             ],
           ),
