@@ -21,7 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProviderr>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Sign Up')),
@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
               //         },
               //       ),
 
-              Consumer<AuthProvider>(builder: (context, auth, _) {
+              Consumer<AuthProviderr>(builder: (context, auth, _) {
                 return CommonButton(
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {

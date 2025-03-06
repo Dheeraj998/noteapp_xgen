@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app_xgen/features/auth/provider/auth_provider.dart';
+import 'package:notes_app_xgen/core/utils/app_colors.dart';
 import 'package:notes_app_xgen/features/notes/model/notes_model.dart';
 import 'package:notes_app_xgen/features/notes/provider/notes_provider.dart';
 import 'package:notes_app_xgen/widgets/custom_textfield.dart';
@@ -73,6 +73,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
               Consumer<NotesProvider>(builder: (context, note, _) {
                 return CommonButton(
+                    onLoading: note.addNoteLoader,
+                    buttonHeight: 50,
+                    buttonStyle: TextStyle(color: AppColors.white),
+                    buttonWidth: double.maxFinite,
+                    buttonColor: AppColors.secondary,
+                    borderRadius: 5,
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         String noteId =
@@ -87,14 +93,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           content: contentController.text,
                           timestamp: DateTime.now(),
                         );
-                        await note.addNote(newNote);
-                        // if (success) {
-                        //   Navigator.pop(context);
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(content: Text('Failed to add note')),
-                        //   );
-                        // }
+                        FocusScope.of(context).unfocus();
+                        bool? success = await note.addNote(newNote);
+                        if (success == true) {
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Failed to add note')),
+                          );
+                        }
                       }
                     },
                     buttonText: "Add Note");

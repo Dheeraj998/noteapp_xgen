@@ -66,7 +66,7 @@ class CommonButton extends StatelessWidget {
                   padding: EdgeInsets.all(15),
                   child: const CircularProgressIndicator(
                     strokeWidth: 3,
-                    color: AppColors.secondary,
+                    color: AppColors.white,
                   ),
                 ))
               : Row(

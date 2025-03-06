@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes_app_xgen/core/utils/app_routes.dart';
+import 'package:notes_app_xgen/core/utils/theme_provider.dart';
 import 'package:notes_app_xgen/features/auth/provider/auth_provider.dart';
 import 'package:notes_app_xgen/features/notes/provider/notes_provider.dart';
 import 'package:notes_app_xgen/firebase_options.dart';
@@ -15,8 +16,9 @@ void main() async {
   ]);
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ChangeNotifierProvider(create: (_) => AuthProviderr()),
       ChangeNotifierProvider(create: (_) => NotesProvider()),
+      ChangeNotifierProvider(create: (_) => ThemeProvider()),
     ],
     builder: (context, state) {
       return MyApp();
@@ -30,15 +32,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'Xgen Notes',
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRoutes.onGenerateRoute,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: themeProvider.themeData, // Apply Dynamic Theme
+
       // home: LoginScreen(),
     );
   }

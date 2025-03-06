@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 NotesModel notesModelFromMap(String str) =>
     NotesModel.fromMap(json.decode(str));
 
@@ -29,7 +31,10 @@ class NotesModel {
         userId: json["userId"],
         title: json["title"],
         content: json["content"],
-        timestamp: json["timestamp"],
+        timestamp: json["timestamp"] != null
+            ? (json["timestamp"] as Timestamp)
+                .toDate() // Convert Timestamp to DateTime
+            : null,
       );
 
   Map<String, dynamic> toMap() => {
@@ -37,6 +42,6 @@ class NotesModel {
         "userId": userId,
         "title": title,
         "content": content,
-        "timestamp": timestamp,
+        "timestamp": timestamp != null ? Timestamp.fromDate(timestamp!) : null,
       };
 }

@@ -2,15 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../data/auth_repository.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthProviderr with ChangeNotifier {
   final AuthRepository _authRepository = AuthRepository();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
   bool _isLoading = true; // Initial loading state
-  bool isLoading = false;
+  bool get isLoading => _isLoading;
   User? get user => _user;
 
-  AuthProvider() {
+  AuthProviderr() {
     _checkUserStatus(); // Check user on app start
   }
 

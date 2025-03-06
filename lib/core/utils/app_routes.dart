@@ -3,6 +3,7 @@ import 'package:notes_app_xgen/features/auth/view/auth_wrapper_screen.dart';
 import 'package:notes_app_xgen/features/auth/view/login_screen.dart';
 import 'package:notes_app_xgen/features/auth/view/signup_screen.dart';
 import 'package:notes_app_xgen/features/notes/view/add_note_screen.dart';
+import 'package:notes_app_xgen/features/notes/view/notes_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -22,6 +23,8 @@ class AppRoutes {
 
       case addNote:
         return MaterialPageRoute(builder: (_) => const AddNoteScreen());
+      case notes:
+        return MaterialPageRoute(builder: (_) => const NotesScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

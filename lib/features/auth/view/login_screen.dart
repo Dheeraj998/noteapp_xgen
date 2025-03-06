@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               //           }
               //         },
               //       ),
-              Consumer<AuthProvider>(builder: (context, auth, _) {
+              Consumer<AuthProviderr>(builder: (context, auth, _) {
                 return CommonButton(
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
